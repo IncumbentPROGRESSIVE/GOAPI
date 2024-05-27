@@ -2,6 +2,7 @@ package api
 
 import (
 	"database/sql"
+	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -20,6 +21,9 @@ func NewAPIsever(addr string, db *sql.DB) *APIserver{
 
 func (s *APIserver) start() error {
 	router := mux.NewRouter()
+	subrouter := router.PathPrefix("/api/v1").Subrouter()
 
+
+	log.Println("listening on", s.addr)
 	return http.ListenAndServe(s.addr, router)
 }
